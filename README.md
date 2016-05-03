@@ -1,4 +1,4 @@
-# Venduitz [![Build Status](https://travis-ci.org/gabrielcorado/venduitz.svg?branch=develop)](https://travis-ci.org/gabrielcorado/venduitz)
+# Venduitz [![Build Status](https://travis-ci.org/gabrielcorado/venduitz.svg?branch=develop)](https://travis-ci.org/gabrielcorado/venduitz) [![Gem Version](https://badge.fury.io/rb/venduitz.svg)](https://badge.fury.io/rb/venduitz)
 A simple JSON-only(until now) template engine, with focus on performance for better Restful-APIs.
 
 ## How to use it
