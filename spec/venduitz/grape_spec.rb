@@ -26,6 +26,6 @@ describe Venduitz::Grape do
     get '/venduitz'
 
     # Expectations
-    expect(last_response.body).to eq("{\"name\":\"Wow!\"}")
+    expect(last_response.body).to eq("{\"name\":\"Wow!\",\"other\":\"Here I come!\"}")
   end
 end

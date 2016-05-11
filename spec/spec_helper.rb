@@ -18,6 +18,7 @@ end
 # Sub sample view
 class SubSampleView < Venduitz::View
   prop :name
+  prop :other
 end
 
 # Sample view
@@ -25,8 +26,10 @@ class SampleView < Venduitz::View
   # Define the property
   prop :kind
   prop :class, -> (o) { o.class }
-  collection :subs, SubSampleView
+  collection :subs, SubSampleView, exclude: [:other]
 end
+
+# Excluded SampleView
 
 # Sample Class
 class Sample
@@ -43,5 +46,9 @@ end
 class SubSample
   def name
     'Wow!'
+  end
+
+  def other
+    'Here I come!'
   end
 end
