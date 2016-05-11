@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    venduitz (0.1.0)
+    venduitz (0.2.0)
       multi_json
       oj
 
