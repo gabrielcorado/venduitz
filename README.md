@@ -70,6 +70,28 @@ res = SearchView.to_json(search, [:images])
 [200, {'Content-Type' => 'application/json'}, res]
 ```
 
+### Using Cache
+To use cache you have to define a Driver for the Venduitz:
+```
+# Defining the CacheDriver
+Venduitz::Cache.driver = CacheDriver
+
+# This cache driver must define some methods (specified on the Vendtuiz::Cache module)
+
+# As common, generate your view but with some differences
+# `true` in this case will enable the cache
+res = SearchView.to_json(search, [:images], true)
+
+# To use a 'partial views' the method #generate also supports cache
+class CachedView < ProductView
+  prop :cover, -> (product) { ImageView.generate(product.cover, [], true) }
+end
+
+# To pass the expiration time to your driver just use a fourth argument
+# to define the driver call options
+res = SearchView.to_json(search, [:images], true, { expire_in: 10.minutes })
+```
+
 ## Development
 * Building the docker container: `docker build -t venduitz .`
 * Running the tests:
