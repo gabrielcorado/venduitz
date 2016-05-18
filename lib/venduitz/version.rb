@@ -2,6 +2,6 @@
 module Venduitz
   # Gem version
   def self.version
-    '0.2.0'.freeze
+    '0.3.0'.freeze
   end
 end
