@@ -37,8 +37,16 @@ module Venduitz
       # for the specific argument
       # @param {Object} obj This must contain the declared properies and collections
       # @param {Array} excluded This array contain the keys that will not be added to the result
+      # @param {Boolean} cache This flag indicates if cache will be performed
+      # @param {Hash} cache_options Cache options
       # @return {Hash} JSON ready hash containing the specified view fields
-      def generate(obj, excluded = [])
+      def generate(obj, excluded = [], cache = false, cache_options = {})
+        # Generate the cache key if cache is enabled
+        key = cache_key(obj, excluded, :generate) if cache
+
+        # Cache?
+        return Cache.get(key) if cache && Cache.exist?(key)
+
         # Reset the values to prevent errors
         @props = {} if @props.nil?
         @collects = {} if @collects.nil?
@@ -60,17 +68,47 @@ module Venduitz
           [collect, values.map {|val| info[:view].generate(val, info[:excluded]) }]
         end
 
-        # Return the full hash
-        Hash[props].merge(Hash[coll])
+        # Full hash
+        result = Hash[props].merge(Hash[coll])
+
+        # Check if cache has to be created
+        Cache.set(key, result, cache_options) if cache
+
+        # Return the result
+        result
       end
 
       # Parse it
       # @param {Object} obj This must contain the declared properies and collections
       # @param {Array} excluded This array contain the keys that will not be added to the result
+      # @param {Boolean} cache This flag indicates if cache will be performed
+      # @param {Hash} cache_options Cache options
       # @return {Hash} The JSON string itself
-      def to_json(obj, excluded = [])
+      def to_json(obj, excluded = [], cache = false, cache_options = {})
+        # Generate the cache key if cache is enabled
+        key = cache_key(obj, excluded, :json) if cache
+
+        # Cache?
+        return Cache.get(key) if cache && Cache.exist?(key)
+
         # Transform the result into json
-        MultiJson.dump generate(obj, excluded)
+        result = MultiJson.dump generate(obj, excluded)
+
+        # Cache must be performed?
+        Cache.set(key, result, cache_options) if cache
+
+        # Return the result
+        result
+      end
+
+      #
+      private
+
+      # Generate the cache key
+      # CACHE
+      #   Key: "{object}/{excluded}/{type}"
+      def cache_key(obj, excluded, type)
+        "#{Cache.digest(obj)}/#{Cache.digest(excluded)}/#{type.to_s}"
       end
     end
   end
