@@ -72,7 +72,7 @@ res = SearchView.to_json(search, [:images])
 
 ### Using Cache
 To use cache you have to define a Driver for the Venduitz:
-```
+```ruby
 # Defining the CacheDriver
 Venduitz::Cache.driver = CacheDriver
 
