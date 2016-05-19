@@ -40,7 +40,7 @@ module Venduitz
       # @param {Boolean} cache This flag indicates if cache will be performed
       # @param {Hash} cache_options Cache options
       # @return {Hash} JSON ready hash containing the specified view fields
-      def generate(obj, excluded = [], cache = false, cache_options = {})
+      def generate(obj, excluded = [], cache = Cache.enabled, cache_options = Cache.config)
         # Generate the cache key if cache is enabled
         key = cache_key(obj, excluded, :generate) if cache
 
@@ -84,7 +84,7 @@ module Venduitz
       # @param {Boolean} cache This flag indicates if cache will be performed
       # @param {Hash} cache_options Cache options
       # @return {Hash} The JSON string itself
-      def to_json(obj, excluded = [], cache = false, cache_options = {})
+      def to_json(obj, excluded = [], cache = Cache.enabled, cache_options = Cache.config)
         # Generate the cache key if cache is enabled
         key = cache_key(obj, excluded, :json) if cache
 

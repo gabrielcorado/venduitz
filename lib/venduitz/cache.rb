@@ -6,7 +6,7 @@ module Venduitz
     # Static methods
     class << self
       #
-      attr_accessor :digestor, :driver, :namespace
+      attr_accessor :digestor, :driver, :namespace, :enabled, :config
 
       # Before use it you have to specify the driver used by
       # this module. The driver must define the following
@@ -68,6 +68,12 @@ module Venduitz
       # Get the namespace
       def namespace
         @namespace.respond_to(:call) ? @namespace.call : @namespace
+      end
+
+      # Config
+      def config
+        return {} if @config.nil?
+        @config
       end
 
       private
