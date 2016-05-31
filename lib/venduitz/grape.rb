@@ -10,15 +10,18 @@ module Venduitz
       # Must define the Representer in the endpoint
       raise 'Must define the Venduitz in the endpoind' if options[:venduitz].nil?
 
+      # Vendtuiz options
+      view_options = options[:venduitz_options] or {}
+
       # Representer options
-      options[:exclude] ||= []
+      view_options[:exclude] ||= []
 
       # Define the Cache options
-      options[:cache] ||= Venduitz::Cache.enabled
-      options[:cache_options] ||= Venduitz::Cache.config
+      view_options[:cache] ||= Venduitz::Cache.enabled
+      view_options[:cache_options] ||= Venduitz::Cache.config
 
       # Render it!
-      options[:venduitz].to_json object, options[:exclude], options[:cache], options[:cache_options]
+      options[:venduitz].to_json object, view_options[:exclude], view_options[:cache], view_options[:cache_options]
     end
   end
 end
