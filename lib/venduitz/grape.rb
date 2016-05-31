@@ -11,7 +11,7 @@ module Venduitz
       raise 'Must define the Venduitz in the endpoind' if options[:venduitz].nil?
 
       # Vendtuiz options
-      view_options = options[:venduitz_options] or {}
+      view_options = options[:venduitz_options].nil? ? {} : options[:venduitz_options]
 
       # Representer options
       view_options[:exclude] ||= []
